@@ -1,6 +1,8 @@
 ﻿using CardsProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
+using System.Security.Cryptography;
 using System.Text;
 
 public class Deck
@@ -8,6 +10,8 @@ public class Deck
     private List<Card> _cards;    
     public int DeckSize => _cards.Count;
     public bool IsEmpty => _cards.Count == 0;
+    
+    private readonly Random rng = new Random(); //seed only once, when the deck is created
 
     public Deck()
     {
@@ -28,8 +32,19 @@ public class Deck
 
     public void Shuffle()
     {
-        Random rng = new();
-        _cards = _cards.OrderBy(_ => rng.Next()).ToList();
+        //Random rng = new();
+        //_cards = _cards.OrderBy(_ => rng.Next()).ToList();
+
+        //Using Fisher-Yates shuffle
+        int rndm;
+        Card temp;
+        for(int x  = _cards.Count - 1; x > 0; x--)
+        {
+            rndm = rng.Next(x + 1);
+            temp = _cards[x];
+            _cards[x] = _cards[rndm];
+            _cards[rndm] = temp;
+        }
     }
 
     public Card DrawCard()
