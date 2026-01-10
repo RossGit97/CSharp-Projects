@@ -4,8 +4,8 @@ using System.Text;
 
 public class Card
 {
-    public int? Number { get; }
-    public Card (int? number)
+    public int Number { get; }
+    public Card (int number)
     {
         Number = number;
     }
